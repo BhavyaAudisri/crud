@@ -8,6 +8,8 @@ COPY package*.json ./
 
 RUN npm install
 
+RUN npm install express
+
 COPY . .
 
 RUN chown -R appuser:appuser /app
