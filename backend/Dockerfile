@@ -4,7 +4,7 @@ RUN apt-get update && \
     apt-get install -y openssl && \
     rm -rf /var/lib/apt/lists/*
 WORKDIR /app
-COPY api/package*.json ./
+COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm uninstall prisma @prisma/client
