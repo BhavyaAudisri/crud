@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+
+  mongodb:
+    image: mongo-db:latest
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - e-commerce
+
+  backend:
+    image: nodejs:22
+    container_name: backend
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=mongodb
+      - DB_PORT=27017
+      - DB_NAME=mongo-db
+    depends_on:
+      - mongodb
+    networks:
+      - e-commerce
+
+  frontend:
+    image: nginx:22
+    container_name: frontend
+    restart: always
+    ports:
+      - "8081:80"
+    depends_on:
+      - backend
+    networks:
+      - e-commerce
+
+volumes:
+  mongo-data:
+
+networks:
+  e-commerce:
+    driver: bridge
